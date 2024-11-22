@@ -134,3 +134,10 @@ This will output the built file to `dist/program-embed.html`, and it will copy t
 4. Paste the built file into the box
     - Note that the preview window does not have the correct stylesheets either, so this preview doesn't display anything close to what it will on the published site
 5. Click "Publish"
+
+Be sure that you have configured the page to be excluded from search results before uploading a file containing participants' names.
+
+## Contributing
+Since this is a public repository, **please do not push any commits containing participants' names**, even if you are on a separate branch or you have made a later commit that deletes the names.
+
+If you have made a commit that contains participant names, please [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) or otherwise alter the commit history so that no commits exist with participants' names in them.
