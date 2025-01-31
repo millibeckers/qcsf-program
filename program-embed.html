@@ -155,7 +155,7 @@
   <section id="top">
     Jump to section...<br />
     <a class="jumpLink" href="#concert_order">Concert&nbsp;Order</a>
-    <a class="jumpLink" href="#directors_notes">Directors&nbsp;Notes</a>
+    <a class="jumpLink" href="#directors_notes" id="directors_notes_jumplink">Directors&nbsp;Notes</a>
     <a class="jumpLink" href="#members">Our&nbsp;Members</a>
     <a class="jumpLink" href="#donors">Top Donors</a>
     <a class="jumpLink" href="#lyrics">Selected&nbsp;Lyrics</a>
@@ -318,7 +318,12 @@ var hasRun = false;
     },
     DirectorsNotes: {
       render: () => {
-        document.querySelector('[data-field="directorsNotes"]').innerHTML = PROGRAM.directorsNotes;
+        if (PROGRAM.directorsNotes) {
+          document.querySelector('[data-field="directorsNotes"]').innerHTML = PROGRAM.directorsNotes;
+        } else {
+          document.getElementById('directors_notes').classList.add('hidden');
+          document.getElementById('directors_notes_jumplink').classList.add('hidden');
+        }
       },
     },
     LyricsEntry: {
