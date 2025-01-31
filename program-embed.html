@@ -46,18 +46,36 @@
   @media (min-width: 700px) {
     .songHeading {
       flex-direction: row;
+      flex-wrap: wrap;
     }
-    .songDots {
-      align-self: stretch;
-      flex: 1;
-      border-bottom: 1px dotted black;
-      margin: 0 5px 6px 5px;
+
+    .start {
+      align-self: flex-start;
     }
     .songTitle {
       align-self: flex-start;
+      flex-grow: 1;
+    }
+    .songTitle::after {
+      content: '';
+      align-self: stretch;
+      flex: 1;
+      border-bottom: 1px dotted black;
+      margin-bottom: 6px;
+      margin-left: 5px;
     }
     .songCredit {
       align-self: flex-end;
+      flex-grow: 1;
+    }
+    .songCredit::before {
+      content: '';
+      align-self: stretch;
+      flex: 1;
+      border-bottom: 1px dotted black;
+      margin-bottom: 6px;
+      margin-right: 5px;
+      margin-left: 0.75px;
     }
     .soloists {
       align-self: flex-end;
@@ -69,10 +87,6 @@
   @media (max-width: 699px) {
     .songHeading {
       flex-direction: column;
-    }
-
-    .songDots {
-      display: none;
     }
     .songTitleText {
       font-weight: 600;
@@ -132,9 +146,8 @@
     <div class="flex songHeading">
       <div class="flex songTitle">
         <span class="songTitleText" data-field="title"></span>
-        <span class="hidden" data-field="lyricsLink">&nbsp;(<a href="#"><em>lyrics</em></a>)</span>
+        <span class="hidden no-print" data-field="lyricsLink">&nbsp;(<a href="#"><em>lyrics</em></a>)</span>
       </div>
-      <div class="flex songDots"></div>
       <div class="flex songCredit" data-field="credit"></div>
     </div>
   </div>
@@ -153,7 +166,7 @@
   <div id="lyrics-entry">
     <h3 data-field="songTitle"></h3>
     <div data-field="lyrics" class="lyrics"></div>
-    <a href="#" class="lyricsReturn"><em>to concert order</em></a>
+    <a href="#" class="lyricsReturn no-print"><em>to concert order</em></a>
   </div>
 </div>
 
@@ -411,7 +424,7 @@ var hasRun = false;
     const lyricsKey = e.target.closest('[data-lyricsKey]')?.getAttribute('data-lyricsKey');
 
     const target = document.getElementById('lyrics-block').querySelector(`[data-lyricsKey="${lyricsKey}"]`);
-       target?.scrollIntoView({ behavior: 'smooth' });
+    target?.scrollIntoView({ behavior: 'smooth' });
   }
 
   const onLyricsBackClick = (e) => {
@@ -464,7 +477,7 @@ var hasRun = false;
   };
 
   const addLyricsLinks = () => {
-    document.getElementById('song-list').querySelectorAll(`[data-lyricsKey]`).forEach((element) => {
+    document.getElementById('song-list').querySelectorAll(`[data-lyricsKey] a`).forEach((element) => {
       element.addEventListener('click', onSongClick);
     });
 
