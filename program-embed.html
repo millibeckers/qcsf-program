@@ -119,6 +119,12 @@
       columns: 3;
     }
   }
+
+  @media print {
+    .no-print, .no-print * {
+      display: none !important;
+    }
+  }
 </style>
 
 <div id="templates-wrapper" style="display:none;">
@@ -152,7 +158,7 @@
 </div>
 
 <div id="qcsf-body">
-  <section id="top">
+  <section id="top" class="no-print">
     Jump to section...<br />
     <a class="jumpLink" href="#concert_order">Concert&nbsp;Order</a>
     <a class="jumpLink" href="#directors_notes" id="directors_notes_jumplink">Directors&nbsp;Notes</a>
@@ -171,19 +177,19 @@
 
   <section id="concert_order">
     <h2>Concert Order</h2>
-    <a class="toTopLink" href="#top"><em>to top</em></a>
+    <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <div class="flex songList" id="song-list"></div>
   </section>
 
   <section id="directors_notes">
     <h2>Director's Notes</h2>
-    <a class="toTopLink" href="#top"><em>to top</em></a>
+    <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <div id="directors-notes" data-field="directorsNotes"></div>
   </section>
 
   <section id="members">
     <h2>Our <span data-field="season"></span> Members</h2>
-    <a class="toTopLink" href="#top"><em>to top</em></a>
+    <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <div id="member-credits" class="memberCredits"></div>
     <ul id="member-list" class="list memberList"></ul>
     <p class="postList">The Queer Chorus of San Francisco is always looking for talented, dedicated performers to become part of our wonderfully quirky family. If you are looking for a diverse community with whom you can share your creativity and vocal ability, QCSF has a home for you. <a href="https://www.qcsf.org/join-us.html">Find out more about how you can join!</a></p>
@@ -191,7 +197,7 @@
 
   <section id="donors">
     <h2>Top Donors</h2>
-    <a class="toTopLink" href="#top"><em>to top</em></a>
+    <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <p>Thank you to our generous donors, who make our work possible!</p>
     <ul id="donor-list" class="list donorList"></ul>
     <p class="postList">Your donations go toward programming, scholarships, travel for the chorus,
@@ -202,7 +208,7 @@
 
   <section id="lyrics">
     <h2>Selected Lyrics</h2>
-    <a class="toTopLink" href="#top"><em>to top</em></a>
+    <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <div id="lyrics-block"></div>
   </section>
 </div>
@@ -470,6 +476,14 @@ var hasRun = false;
   const breakSandbox = () => {
     // This is needed so that the margin-scroll-top property on the #top link doesn't get cut off by the container
     document.getElementById('qcsf-body').parentElement?.style?.removeProperty('overflow-y');
+
+    // Hide certain elements of the page from printer view for nice-looking hard copies
+    document.querySelector('.cento-header')?.classList.add('no-print');
+    setTimeout(() => {
+      // our code runs before these elements are on the page, so we gotta wait
+      document.querySelector('.footer-wrap')?.classList.add('no-print');
+      document.querySelector('.floating_button')?.classList.add('no-print');
+    }, 50);
   };
 
   const main = () => {
