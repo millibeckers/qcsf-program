@@ -43,16 +43,13 @@
     margin-top: 12px;
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 600px) {
     .songHeading {
       flex-direction: row;
       flex-wrap: wrap;
     }
-
-    .start {
-      align-self: flex-start;
-    }
     .songTitle {
+      display: flex;
       align-self: flex-start;
       flex-grow: 1;
     }
@@ -84,7 +81,7 @@
       max-width: 70%;
     }
   }
-  @media (max-width: 699px) {
+  @media (max-width: 599px) {
     .songHeading {
       flex-direction: column;
     }
@@ -144,7 +141,7 @@
 <div id="templates-wrapper" style="display:none;">
   <div id="song-entry" class="flex songWrapper">
     <div class="flex songHeading">
-      <div class="flex songTitle">
+      <div class="songTitle">
         <span class="songTitleText" data-field="title"></span>
         <span class="hidden no-print" data-field="lyricsLink">&nbsp;(<a href="#"><em>lyrics</em></a>)</span>
       </div>
@@ -176,7 +173,7 @@
     <a class="jumpLink" href="#concert_order">Concert&nbsp;Order</a>
     <a class="jumpLink" href="#directors_notes" id="directors_notes_jumplink">Directors&nbsp;Notes</a>
     <a class="jumpLink" href="#members">Our&nbsp;Members</a>
-    <a class="jumpLink" href="#donors">Top Donors</a>
+    <a class="jumpLink" href="#donors">Top&nbsp;Donors</a>
     <a class="jumpLink" href="#lyrics">Selected&nbsp;Lyrics</a>
   </section>
 
