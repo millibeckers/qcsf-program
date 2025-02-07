@@ -77,11 +77,11 @@ type ProgramData = {
      * Basically anyone who should be individually called out, but wouldn't be described as a "soloist".
      *
      * Unlike `soloists`, role _does_ need to be included here. e.g. `"Synth: Jay Doe"`
-     * For multiple people who should be credited the same way, put the role prefix ahead of the
-     * first name in the list (e.g. `['Backup: Jane Doe', 'Jay Doe', 'John Doe']`)
+     * Each featured individual will be on their own line, so multiple people on the same part should
+     * be part of the same string.
      *
-     * Any whitespace within these strings will be replaced with non-breaking spaces so that line
-     * breaks occur between names.
+     * Any whitespace that isn't immediately after a comma within these strings will be replaced with
+     * non-breaking spaces so that line breaks occur between names.
      */
     featuring?: string[];
     /**

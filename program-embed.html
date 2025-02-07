@@ -47,6 +47,7 @@
     .songHeading {
       flex-direction: row;
       flex-wrap: wrap;
+      line-height: 29px;
     }
     .songTitle {
       display: flex;
@@ -58,7 +59,7 @@
       align-self: stretch;
       flex: 1;
       border-bottom: 1px dotted black;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       margin-left: 5px;
     }
     .songCredit {
@@ -70,7 +71,7 @@
       align-self: stretch;
       flex: 1;
       border-bottom: 1px dotted black;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       margin-right: 5px;
       margin-left: 0.75px;
     }
@@ -79,6 +80,7 @@
       text-align: end;
       font-size: 14px;
       max-width: 70%;
+      margin-top: 2px;
     }
   }
   @media (max-width: 599px) {
@@ -217,7 +219,7 @@
 
 
   <section id="lyrics">
-    <h2>Selected Lyrics</h2>
+    <h2>Lyrics</h2>
     <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <div id="lyrics-block"></div>
   </section>
@@ -268,7 +270,7 @@ var hasRun = false;
 
         const soloistsLabel = soloistsData?.length === 1 ? 'Soloist: ' : 'Soloists: ';
         // Use non-breaking spaces within a soloist's name so that line breaks occur between names
-        const soloistsNames = soloistsData.map((soloist) => soloist.replace(' ', '\xa0')).join(', ');
+        const soloistsNames = soloistsData.map((soloist) => soloist.replaceAll(' ', '\xa0')).join(', ');
 
         injectFields(element, { soloists: soloistsLabel + soloistsNames });
 
@@ -281,20 +283,22 @@ var hasRun = false;
       },
     },
     Featuring: {
-      generate: (featuringData) => {
+      generate: (featuredOne) => {
         const element = cloneElement('featuring');
 
-        // Use non-breaking spaces within a soloist's name so that line breaks occur between names
-        const featuring = featuringData.map((soloist) => soloist.replace(' ', '\xa0')).join(', ');
+        // Replace all spaces that aren't after commas with non-breaking spaces so we don't break in people's names
+        const featuring = featuredOne.replaceAll(/([^,]) /g, '$1\xa0');
 
         injectFields(element, { featuring });
 
         return element;
       },
       renderInto: (parentElement, featuringData) => {
-        const featuring = Components.Featuring.generate(featuringData);
+        featuringData.forEach((featuredOne) => {
+          const featuring = Components.Featuring.generate(featuredOne);
 
-        parentElement.appendChild(featuring);
+          parentElement.appendChild(featuring);
+        })
       },
     },
     SongEntry: {
