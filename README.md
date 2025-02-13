@@ -2,7 +2,6 @@
 
 Everything you need to construct a concert program and then upload it to our Flipcause Website.
 
-
 ## Structure
 
 The main code lives inside of `program-embed.html`, and the program data can be found in `program-data.js`. The build process described below combines these two files into one file that can be pasted into the Flipcause website builder.
@@ -116,13 +115,9 @@ Note that `wrapper.html` does not contain any of the stylesheets from the flipca
 
 ## Build and Upload
 
-**Build Prereqs:**
-1. Ruby is installed
-2. `./build` has execute permissions (`chmod +x ./build`)
-
 **To build:**
 ```
-$ ./build
+$ sh ./build.sh
 ```
 
 This will output the built file to `dist/program-embed.html`, and it will copy the output to your clipboard for easy uploading.
@@ -141,3 +136,33 @@ Be sure that you have configured the page to be excluded from search results bef
 Since this is a public repository, **please do not push any commits containing participants' names**, even if you are on a separate branch or you have made a later commit that deletes the names.
 
 If you have made a commit that contains participant names, please [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) or otherwise alter the commit history so that no commits exist with participants' names in them.
+
+## Instructions for Non-Developers
+We are going to have to get a bit technical here, but don't panic! I'll walk you through each step.
+
+The site you're looking at is called GitHub, and it's one way software engineers use to share code with each other.
+
+1. Click the green "Code" button and then click "Download Zip" from the popup
+2. Go to your Downloads folder and then unzip the new zip file
+3. Open the file `"program-data.js"` in a text editor (the default one for Macs is TextEdit)
+4. Use the instructions in the "Program Data" section of this page to fill in the data for the program.
+5. Check how the data is going to show up by opening the `wrapper.html` file on your computer.
+> Note! This page is going to be ugly, that's because the pretty parts all come from the Flipcause website. You mainly want to use this to see that your songs are showing up in the order you want and that your lyrics are labeled correctly.
+
+Once you're ready to upload, you need to combine the program data with the program code.
+
+1. Open up the `program-embed.html` file, and find the line that looks like this:
+```html
+<script id="program-data" src="./program-data.js"></script>
+```
+2. Delete that one line and replace it with this:
+```html
+<script>
+
+</script>
+```
+3. Copy the entire `program-data.js` file and paste it in between the `<script>` and `</script>` lines you just added
+4. Copy the whole new thing
+5. Follow the instructions in the Upload section of this page to upload the file
+
+> If you're comfortable using the terminal, you can avoid some of this hassle by using the provided build script. However, you should never run random scripts from the internet if you don't understand what you're doing - bad actors can easily trick you into really messing up your computer. The copy/pasting method I've written here, while annoying, is also safe.
