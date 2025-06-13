@@ -95,6 +95,13 @@
     }
   }
 
+  .subset .songTitleText:before, .soloists-key:before {
+    content: '★';
+    margin-right: 2px;
+    font-size: 12px;
+    vertical-align: 2px;
+  }
+
   .intermissionLabel {
     flex-direction: row;
     align-self: center;
@@ -191,6 +198,7 @@
     <h2>Concert Order</h2>
     <a class="toTopLink no-print" href="#top"><em>to top</em></a>
     <div class="flex songList" id="song-list"></div>
+    <div class="hidden" id="subset-key"><em class="soloists soloists-key">: Solo or Small Ensemble</em></div>
   </section>
 
   <section id="directors_notes">
@@ -216,7 +224,6 @@
     and other community-building efforts.<br/><br/>
     <a href="https://www.qcsf.org/support-us.html">Become a donor today</a> and help us keep the music going &#x1F3B5;&#x1F3B6;</p>
   </section>
-
 
   <section id="lyrics">
     <h2>Lyrics</h2>
@@ -319,6 +326,11 @@ var hasRun = false;
           newSongEntry.setAttribute('data-lyricsKey', songData.lyricsKey);
 
           newSongEntry.querySelector('[data-field="lyricsLink"]').classList.remove('hidden');
+        }
+
+        if (songData.isSubset) {
+          newSongEntry.classList.add('subset');
+          document.getElementById('subset-key').classList.remove('hidden');
         }
 
         return newSongEntry;

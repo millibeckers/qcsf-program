@@ -4,16 +4,20 @@ if [[ ! -e ./dist ]]; then
   mkdir dist
 fi
 
+rm ./dist/program-embed.html
+touch ./dist/program-embed.html
+
 while IFS= read -r line; do
   if [[ $line == "<script id=\"program-data\" src=\"./program-data.js\"></script>" ]]; then
     echo "<script>" >> ./dist/program-embed.html
     cat ./program-data.js >> ./dist/program-embed.html
     echo "</script>" >> ./dist/program-embed.html
   else
-    echo "$line" >> ./dist/program-embed.html
+    printf "%s\n" "$line" >> ./dist/program-embed.html
   fi
 done < ./program-embed.html
 
+echo "<!-- generated at $(date) -->" >> ./dist/program-embed.html
 
 cat ./dist/program-embed.html | pbcopy
 
