@@ -140,6 +140,32 @@
     }
   }
 
+  .angels-list {
+    margin-top: 12px;
+  }
+  .angel-name:not(:last-child)::after {
+    content: ', ';
+  }
+  .angel-name:nth-child(6n+1) {
+    color: #E40303;
+  }
+  .angel-name:nth-child(6n+2) {
+    color: #FF8C00;
+  }
+  .angel-name:nth-child(6n+3) {
+    color: #dec102
+  }
+  .angel-name:nth-child(6n+4) {
+    color: #008026;
+  }
+  .angel-name:nth-child(6n+5) {
+    color: #004CFF;
+  }
+  .angel-name:nth-child(6n+6) {
+    color: #732982;
+  }
+
+
   @media print {
     .no-print, .no-print * {
       display: none !important;
@@ -164,6 +190,7 @@
 
   <li id="member" data-field="member"></li>
   <li id="donor" data-field="donor"></li>
+  <em id="angel" class="angel-name" data-field="angel"></em>
 
   <div id="member-credit">
     <b><span data-field="role"></span>:&nbsp;</b><span data-field="name"></span>
@@ -183,7 +210,8 @@
     <a class="jumpLink" href="#directors_notes" id="directors_notes_jumplink">Director's&nbsp;Notes</a>
     <a class="jumpLink" href="#members">Our&nbsp;Members</a>
     <a class="jumpLink" href="#donors">Top&nbsp;Donors</a>
-    <a class="jumpLink" href="#lyrics">Selected&nbsp;Lyrics</a>
+    <a class="jumpLink" href="#angels">QCSF&nbsp;Angels</a>
+    <a class="jumpLink" href="#lyrics">Lyrics</a>
   </section>
 
   <section>
@@ -223,6 +251,15 @@
     <p class="postList">Your donations go toward programming, scholarships, travel for the chorus,
     and other community-building efforts.<br/><br/>
     <a href="https://www.qcsf.org/support-us.html">Become a donor today</a> and help us keep the music going &#x1F3B5;&#x1F3B6;</p>
+  </section>
+
+  <section id="angels">
+    <h2>QCSF Angels</h2>
+    <a class="toTopLink no-print" href="#top"><em>to top</em></a>
+    <p>Although these members have passed on, their spirit remains and we keep them in our hearts.</p>
+    <p id="angels-list" class="angels-list"></p>
+    <p class="postList">If you know of a former chorus member who has passed on and is not on our list, please e-mail <a href="mailto:manager@qcsf.org">manager@qcsf.org</a> so we can remember them in our Angels List.</p>
+    </p>
   </section>
 
   <section id="lyrics">
@@ -428,7 +465,21 @@ var hasRun = false;
         const element = Components.DonorListItem.generate(donor);
         Components.DonorListItem.inject(element);
       },
-    }
+    },
+    AngelListItem: {
+      generate: (angel) => {
+        const newAngel = cloneElement('angel');
+
+        return injectFields(newAngel, { angel: angel.replaceAll(' ', '\xa0') });
+      },
+      inject: (element) => {
+        document.getElementById('angels-list').appendChild(element);
+      },
+      render: (angel) => {
+        const element = Components.AngelListItem.generate(angel);
+        Components.AngelListItem.inject(element);
+      },
+    },
   };
 
   const onSongClick = (e) => {
@@ -489,6 +540,12 @@ var hasRun = false;
     });
   };
 
+  const renderAngelsList = () => {
+    PROGRAM.angels.forEach((angel) => {
+      Components.AngelListItem.render(angel);
+    });
+  };
+
   const addLyricsLinks = () => {
     document.getElementById('song-list').querySelectorAll(`[data-lyricsKey] a`).forEach((element) => {
       element.addEventListener('click', onSongClick);
@@ -519,6 +576,7 @@ var hasRun = false;
     renderDirectorsNotes();
     renderMembersList();
     renderDonorsList();
+    renderAngelsList();
     renderLyrics();
 
     addLyricsLinks();
