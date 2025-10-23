@@ -198,10 +198,12 @@
 
   <div id="lyrics-entry">
     <h3 data-field="songTitle"></h3>
-    <div data-field="lyrics" class="lyrics"></div>
+    <div data-field="lyrics" data-field-options="markdown" class="lyrics"></div>
     <a href="#" class="lyricsReturn no-print"><em>to concert order</em></a>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/lib/marked.umd.js"></script>
 
 <div id="qcsf-body">
   <section id="top" class="no-print">
@@ -232,7 +234,7 @@
   <section id="directors_notes">
     <h2>Director's Notes</h2>
     <a class="toTopLink no-print" href="#top"><em>to top</em></a>
-    <div id="directors-notes" data-field="directorsNotes"></div>
+    <div id="directors-notes" data-field="directorsNotes" data-field-options="markdown"></div>
   </section>
 
   <section id="members">
@@ -289,18 +291,26 @@ var hasRun = false;
     clonedElement.elementId = undefined;
     clonedElement.setAttribute('data-injected', 'true');
     return clonedElement;
-  }
+  };
+
+  const setTextOnElement = (element, text) => {
+    if (element.getAttribute?.('data-field-options')?.includes('markdown')) {
+      element.innerHTML = marked.parse(text, {gfm: true, breaks: true});
+      return;
+    }
+    element.innerText = text;
+  };
 
   const injectFields = (element, fields) => {
     Object.entries(fields).forEach(([fieldName, value]) => {
       if (element.getAttribute?.('data-field') === fieldName) {
-        element.innerText = value;
+        setTextOnElement(element, value)
         return;
       }
 
       const field = element.querySelector(`[data-field="${fieldName}"]`);
       if (field) {
-        field.innerText = value;
+        setTextOnElement(field, value)
       }
     });
 
@@ -388,7 +398,7 @@ var hasRun = false;
     DirectorsNotes: {
       render: () => {
         if (PROGRAM.directorsNotes) {
-          document.querySelector('[data-field="directorsNotes"]').innerHTML = PROGRAM.directorsNotes;
+          injectFields(document.querySelector('[data-field="directorsNotes"]'), {directorsNotes: PROGRAM.directorsNotes });
         } else {
           document.getElementById('directors_notes').classList.add('hidden');
           document.getElementById('directors_notes_jumplink').classList.add('hidden');

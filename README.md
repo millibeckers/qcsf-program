@@ -19,7 +19,7 @@ type ProgramData = {
   /**
    * Director's notes
    *
-   * Injected into the document as HTML - so HTML tags can be used. Newlines must be made with `<br/>`s etc.
+   * Director's notes are parsed as GitHub-style markdown with line breaks preserved
    */
   directorsNotes: string;
   /**
@@ -100,7 +100,7 @@ type ProgramData = {
    * Lyrics will be displayed in the order of their corresponding songs, not in the order that they
    * are provided here.
    *
-   * Lyrics are injected as text
+   * Lyrics are in GitHub-style mardown with line breaks preserved
    */
   lyrics: { [lyricsKey: string]: string; };
 };
