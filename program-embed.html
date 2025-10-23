@@ -35,6 +35,9 @@
     flex-direction: column;
     margin-bottom: 10px;
   }
+  .markdown p {
+    margin-bottom: 20px;
+  }
 
   [data-lyricsKey], section {
     scroll-margin-top: 60px;
@@ -198,7 +201,7 @@
 
   <div id="lyrics-entry">
     <h3 data-field="songTitle"></h3>
-    <div data-field="lyrics" data-field-options="markdown" class="lyrics"></div>
+    <div data-field="lyrics" data-field-options="markdown" class="lyrics markdown"></div>
     <a href="#" class="lyricsReturn no-print"><em>to concert order</em></a>
   </div>
 </div>
@@ -234,7 +237,7 @@
   <section id="directors_notes">
     <h2>Director's Notes</h2>
     <a class="toTopLink no-print" href="#top"><em>to top</em></a>
-    <div id="directors-notes" data-field="directorsNotes" data-field-options="markdown"></div>
+    <div id="directors-notes" data-field="directorsNotes" data-field-options="markdown" class="markdown"></div>
   </section>
 
   <section id="members">
